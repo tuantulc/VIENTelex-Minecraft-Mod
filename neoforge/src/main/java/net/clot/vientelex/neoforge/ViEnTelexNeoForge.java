@@ -17,6 +17,7 @@ public class ViEnTelexNeoForge {
     public static class ModBusEvents {
         @SubscribeEvent
         public static void registerKeyMappings(RegisterKeyMappingsEvent event) {
+            net.clot.vientelex.VietnameseIMEConfig.load();
             event.register(VietnameseIMEClient.TOGGLE_KEY);
         }
     }

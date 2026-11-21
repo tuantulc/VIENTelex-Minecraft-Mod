@@ -2,6 +2,7 @@ package net.clot.vientelex.mixin;
 
 import net.clot.vientelex.VietnameseIME;
 import net.clot.vientelex.VietnameseIMEClient;
+import net.clot.vientelex.VietnameseIMEConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -24,20 +25,26 @@ public abstract class ScreenMixin {
     @Inject(method = "render", at = @At("TAIL"))
     private void onRender(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
         if (this.font == null) return;
+        VietnameseIMEConfig.ensureLoaded();
+        if (!VietnameseIMEConfig.showBadge || VietnameseIMEConfig.badgeOpacity <= 0.0f) return;
 
         boolean enabled = VietnameseIME.isEnabled();
         String badge = enabled ? "[VI]" : "[EN]";
-        int color = enabled ? 0xFF55FF55 : 0xFFAAAAAA;
+
+        float opacity = VietnameseIMEConfig.badgeOpacity;
+        int textAlpha = (int) (opacity * 255.0f) & 0xFF;
+        int textColor = (textAlpha << 24) | (enabled ? 0x55FF55 : 0xAAAAAA);
 
         int textWidth = Math.max(this.font.width("[VI]"), this.font.width("[EN]"));
         int x = this.width - textWidth - 6;
         int y = this.height - this.font.lineHeight - 4;
 
         boolean hovered = mouseX >= x - 2 && mouseX <= x + textWidth + 2 && mouseY >= y - 2 && mouseY <= y + this.font.lineHeight;
-        int bgColor = hovered ? 0xCC333333 : 0x88000000;
+        int bgAlpha = (int) (opacity * (hovered ? 0xCC : 0x88)) & 0xFF;
+        int bgColor = (bgAlpha << 24) | (hovered ? 0x333333 : 0x000000);
 
         guiGraphics.fill(x - 2, y - 2, x + textWidth + 2, y + this.font.lineHeight, bgColor);
-        guiGraphics.drawString(this.font, badge, x, y, color, false);
+        guiGraphics.drawString(this.font, badge, x, y, textColor, false);
     }
 
     @Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)

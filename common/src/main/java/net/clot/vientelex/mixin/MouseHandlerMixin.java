@@ -1,6 +1,7 @@
 package net.clot.vientelex.mixin;
 
 import net.clot.vientelex.VietnameseIMEClient;
+import net.clot.vientelex.VietnameseIMEConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MouseHandler;
 import net.minecraft.client.gui.Font;
@@ -22,6 +23,11 @@ public abstract class MouseHandlerMixin {
     @Inject(method = "onPress", at = @At("HEAD"), cancellable = true)
     private void onMousePress(long window, int button, int action, int mods, CallbackInfo ci) {
         if (button == 0 && action == 1 && this.minecraft != null && this.minecraft.screen != null) {
+            VietnameseIMEConfig.ensureLoaded();
+            if (!VietnameseIMEConfig.showBadge || VietnameseIMEConfig.badgeOpacity <= 0.0f) {
+                return;
+            }
+
             Screen screen = this.minecraft.screen;
             Font font = this.minecraft.font;
             if (font != null) {
