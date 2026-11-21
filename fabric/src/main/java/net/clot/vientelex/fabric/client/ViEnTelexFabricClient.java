@@ -12,6 +12,7 @@ public class ViEnTelexFabricClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        net.clot.vientelex.VietnameseIMEConfig.load();
         KeyMappingHelper.registerKeyMapping(VietnameseIMEClient.TOGGLE_KEY);
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
