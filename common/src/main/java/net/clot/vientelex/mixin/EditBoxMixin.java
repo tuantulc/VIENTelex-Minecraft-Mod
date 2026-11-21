@@ -2,6 +2,7 @@ package net.clot.vientelex.mixin;
 
 import net.clot.vientelex.VietnameseIME;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.input.CharacterEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,11 +19,12 @@ public abstract class EditBoxMixin {
     @Shadow public abstract boolean canConsumeInput();
 
     @Inject(method = "charTyped", at = @At("HEAD"), cancellable = true)
-    private void onCharTyped(char codePoint, int modifiers, CallbackInfoReturnable<Boolean> cir) {
+    private void onCharTyped(CharacterEvent event, CallbackInfoReturnable<Boolean> cir) {
         if (!this.canConsumeInput()) {
             return;
         }
 
+        char codePoint = (char) event.codepoint();
         VietnameseIME.ProcessResult result = VietnameseIME.processInput(this.getValue(), this.getCursorPosition(), codePoint);
         if (result != null) {
             this.setValue(result.newText);

@@ -4,8 +4,10 @@ import net.clot.vientelex.VietnameseIME;
 import net.clot.vientelex.VietnameseIMEClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,8 +23,8 @@ public abstract class ScreenMixin {
     @Shadow public int width;
     @Shadow public int height;
 
-    @Inject(method = "render", at = @At("TAIL"))
-    private void onRender(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
+    @Inject(method = "extractRenderState", at = @At("TAIL"))
+    private void onExtractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
         if (this.font == null) return;
 
         boolean enabled = VietnameseIME.isEnabled();
@@ -37,16 +39,18 @@ public abstract class ScreenMixin {
         int bgColor = hovered ? 0xCC333333 : 0x88000000;
 
         guiGraphics.fill(x - 2, y - 2, x + textWidth + 2, y + this.font.lineHeight, bgColor);
-        guiGraphics.drawString(this.font, badge, x, y, color, false);
+        guiGraphics.text(this.font, badge, x, y, color, false);
     }
 
     @Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
-    private void onMouseClicked(double mouseX, double mouseY, int button, CallbackInfoReturnable<Boolean> cir) {
-        if (button == 0 && this.font != null) {
+    private void onMouseClicked(MouseButtonEvent event, boolean wasHandled, CallbackInfoReturnable<Boolean> cir) {
+        if (event.button() == 0 && this.font != null) {
             int textWidth = Math.max(this.font.width("[VI]"), this.font.width("[EN]"));
             int x = this.width - textWidth - 6;
             int y = this.height - this.font.lineHeight - 4;
 
+            double mouseX = event.x();
+            double mouseY = event.y();
             if (mouseX >= x - 2 && mouseX <= x + textWidth + 2 && mouseY >= y - 2 && mouseY <= y + this.font.lineHeight) {
                 VietnameseIMEClient.toggleAndNotify(this.minecraft, true);
                 cir.setReturnValue(true);
@@ -55,8 +59,8 @@ public abstract class ScreenMixin {
     }
 
     @Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)
-    private void onKeyPressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> cir) {
-        if (VietnameseIMEClient.TOGGLE_KEY.matches(keyCode, scanCode)) {
+    private void onKeyPressed(KeyEvent event, CallbackInfoReturnable<Boolean> cir) {
+        if (VietnameseIMEClient.TOGGLE_KEY.matches(event)) {
             VietnameseIMEClient.toggleAndNotify(this.minecraft, false);
             cir.setReturnValue(true);
         }

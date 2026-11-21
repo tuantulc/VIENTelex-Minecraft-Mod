@@ -13,16 +13,13 @@ import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 public class ViEnTelexNeoForge {
     public static final String MOD_ID = "vientelex";
 
-    @EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
-    public static class ModBusEvents {
+    @EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT)
+    public static class ClientEvents {
         @SubscribeEvent
         public static void registerKeyMappings(RegisterKeyMappingsEvent event) {
             event.register(VietnameseIMEClient.TOGGLE_KEY);
         }
-    }
 
-    @EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT)
-    public static class GameBusEvents {
         @SubscribeEvent
         public static void onClientTick(ClientTickEvent.Post event) {
             if (Minecraft.getInstance().player != null) {
