@@ -1,17 +1,29 @@
-# VI-EN Vietnamese Telex
+# VI-EN: Vietnamese Telex IME
 
-Bo go tieng Viet Telex client-side sieu nhe cho Minecraft (Forge 1.20.1+), san sang cho Multi-loader va Stonecutter.
+# English below!
 
----
+> **Xin lỗi bác Long, trước giờ cháu tưởng làm IME giống Unikey đơn giản lắm :sob:**
 
-### Tinh nang chinh
-- **Khong ket phim WASD:** Mod client-side thuan tuy, khong can chay UniKey/EVKey ngoai he dieu hanh.
-- **Khong nhai chu / loi Backspace ao:** Can thiep truc tiep vao buffer chuoi trong RAM, hoat dong tron tru tren **Chat, Anvil, Sign, Book, EMI, JEI, REI, AE2, Tom's Storage**.
-- **Bo go thong minh:**
-  - Ho tro day du Telex co ban (`aa, aw, ee, oo, ow, uw, w, dd`).
-  - Ho tro go tu do (`cocos -> cốc`, `neme -> nêm`, `ddatas -> đất`).
-  - Tu dong bao ve tu tieng Anh va Minecraft: `haha`, `gacha`, `bigger`, `dater`, `water`, `teams`, `craft`, `player`, `super`.
-  - Tu dong bo dau thanh theo chuan chinh ta tieng Viet.
-  - Phim `z` de xoa dau, go lap phim dau de undo.
-- **Phim tat F8:** Bat/Tat bo go bat ky luc nao, ke ca khi dang mo GUI.
-- **Badge indicator:** Hien thi huy hieu nho `[VI]` hoac `[EN]` o goc man hinh khi mo GUI.
+# Tiếng Việt/Vietnamese
+
+Chắc chơi game này lâu, ai cũng bị vụ Creeper dí hoặc đang solo PvP căng thẳng mà bấm `W` nó biến thành `Ư`. Đang muốn chạy mà bị nuốt mất phím, đứng đực mặt ra rồi chết, ai chả cay?
+
+Tất nhiên là vào game tắt Unikey cũng được, nhưng chat với bạn mà cứ phải thanh minh "tao gay riu roi" nghĩa là "tao gãy rìu rồi" cũng mệt. Thế nên tôi mới làm ra cái mod này.
+
+Tắt hẳn Unikey / EVKey ở ngoài Windows đi, vào game là tự gõ được Telex. Bấm phím **`F8`** (chỉnh được thành phím khác trong cài đặt) hoặc lấy chuột click thẳng vào cái nút **`[VI]`** ở góc dưới bên phải màn hình là chuyển được giữa gõ Telex và gõ thường.
+
+Tất nhiên, Telex này dùng được ở mọi nơi. Nào là khung chat, tấm bảng, cái đe, viết sách, ô tìm kiếm đồ của JEI,...
+
+Mod chỉ cần cài trên máy, đem đi chơi ở bất kỳ server nào cũng được.
+
+# English
+
+If you've played this game long enough with an external Vietnamese keyboard on, you've definitely been there: a Creeper is sprinting at you or you're in the middle of a sweaty PvP duel, you frantically hit `W` to run, and it turns into `Ư`. Yeah your input got eaten, you freeze on the spot, and you die. What a pain.
+
+Sure, you could just toggle UniKey off before playing. But having to type unaccented Vietnamese and constantly explaining to your friends what you actually meant gets exhausting real quick. So, I made this mod.
+
+Now you can leave UniKey / EVKey off completely. Typing Telex is handled natively in-game. Press **`F8`** (fully rebindable in Controls) or click the **`[VI]`** badge at the bottom-right of your screen to toggle between Telex and standard typing.
+
+And yep, it works everywhere: Chat, Signs, Anvils, Books, JEI search bars, you name it.
+
+100% Client-side. Just drop it in and play on any server you want.
