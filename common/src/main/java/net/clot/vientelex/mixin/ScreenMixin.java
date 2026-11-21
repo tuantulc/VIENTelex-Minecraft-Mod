@@ -40,20 +40,6 @@ public abstract class ScreenMixin {
         guiGraphics.drawString(this.font, badge, x, y, color, false);
     }
 
-    @Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
-    private void onMouseClicked(double mouseX, double mouseY, int button, CallbackInfoReturnable<Boolean> cir) {
-        if (button == 0 && this.font != null) {
-            int textWidth = Math.max(this.font.width("[VI]"), this.font.width("[EN]"));
-            int x = this.width - textWidth - 6;
-            int y = this.height - this.font.lineHeight - 4;
-
-            if (mouseX >= x - 2 && mouseX <= x + textWidth + 2 && mouseY >= y - 2 && mouseY <= y + this.font.lineHeight) {
-                VietnameseIMEClient.toggleAndNotify(this.minecraft, true);
-                cir.setReturnValue(true);
-            }
-        }
-    }
-
     @Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)
     private void onKeyPressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> cir) {
         if (VietnameseIMEClient.TOGGLE_KEY.matches(keyCode, scanCode)) {
