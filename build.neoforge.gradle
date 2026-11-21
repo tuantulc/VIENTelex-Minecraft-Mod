@@ -56,6 +56,14 @@ tasks.withType(JavaCompile).configureEach {
     it.options.release = Integer.parseInt(java_version)
 }
 
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes([
+                'MixinConfigs': "${mod_id}.mixins.json"
+        ])
+    }
+}
+
 java {
     sourceCompatibility = JavaVersion.toVersion(java_version)
     targetCompatibility = JavaVersion.toVersion(java_version)
