@@ -1,0 +1,31 @@
+# Gradle & Build outputs
+.gradle/
+**/build/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Run directories & Logs
+run/
+**/run/
+logs/
+**/logs/
+crash-reports/
+**/crash-reports/
+*.log
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.classpath
+.project
+.settings/
+bin/
+out/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini

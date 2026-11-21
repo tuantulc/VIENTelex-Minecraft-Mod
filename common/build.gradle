@@ -1,0 +1,27 @@
+plugins {
+    id 'java-library'
+    id 'eclipse'
+    id 'idea'
+}
+
+base {
+    archivesName = "${mod_id}-common"
+}
+
+compileJava.enabled = false
+processResources.enabled = false
+jar.enabled = false
+
+dependencies {
+    compileOnly 'org.spongepowered:mixin:0.8.5'
+    compileOnly 'org.apache.logging.log4j:log4j-api:2.20.0'
+    compileOnly 'com.google.code.gson:gson:2.10.1'
+    compileOnly 'com.google.guava:guava:31.1-jre'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}

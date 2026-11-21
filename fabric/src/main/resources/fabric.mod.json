@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "vientelex",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "Forkeve"
+  ],
+  "contact": {},
+  "license": "${mod_license}",
+  "icon": "",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "net.clot.vientelex.fabric.client.ViEnTelexFabricClient"
+    ]
+  },
+  "mixins": [
+    "vientelex.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.21",
+    "minecraft": "${minecraft_dependency_range}",
+    "java": ">=17"
+  }
+}

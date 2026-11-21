@@ -1,0 +1,57 @@
+plugins {
+    id 'fabric-loom' version '1.7-SNAPSHOT'
+    id 'idea'
+}
+
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = "${mod_id}-fabric-${output_version_name}"
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+}
+
+sourceSets.main.java.srcDirs = [
+    rootProject.file('common/src/main/java'),
+    rootProject.file('fabric/src/main/java')
+]
+sourceSets.main.resources.srcDirs = [
+    rootProject.file('common/src/main/resources'),
+    rootProject.file('fabric/src/main/resources')
+]
+
+processResources {
+    inputs.property 'version', project.version
+    inputs.property 'minecraft_dependency_range', minecraft_dependency_range
+    inputs.property 'mod_name', mod_name
+    inputs.property 'mod_description', mod_description
+    inputs.property 'mod_authors', mod_authors
+    inputs.property 'mod_license', mod_license
+
+    filesMatching('fabric.mod.json') {
+        expand([
+                'version': project.version,
+                'minecraft_dependency_range': minecraft_dependency_range,
+                'mod_name': mod_name,
+                'mod_description': mod_description,
+                'mod_authors': mod_authors,
+                'mod_license': mod_license
+        ])
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = Integer.parseInt(java_version)
+}
+
+java {
+    sourceCompatibility = JavaVersion.toVersion(java_version)
+    targetCompatibility = JavaVersion.toVersion(java_version)
+}

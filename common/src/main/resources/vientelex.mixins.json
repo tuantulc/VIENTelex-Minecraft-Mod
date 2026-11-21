@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.clot.vientelex.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "vientelex.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "EditBoxMixin",
+    "ScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
