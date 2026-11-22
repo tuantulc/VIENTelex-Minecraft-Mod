@@ -25,7 +25,6 @@ public abstract class EditBoxMixin {
             return;
         }
 
-        // If user has an active text selection, let vanilla handle it (replaces selection)
         if (this.getCursorPosition() != this.highlightPos) {
             return;
         }
