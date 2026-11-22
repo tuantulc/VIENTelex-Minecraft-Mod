@@ -9,7 +9,7 @@
   ],
   "contact": {},
   "license": "${mod_license}",
-  "icon": "",
+  "icon": "assets/vientelex/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
