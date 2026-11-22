@@ -5,7 +5,9 @@ import net.clot.vientelex.VietnameseIMEConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MouseHandler;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.input.MouseButtonInfo;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,6 +32,10 @@ public abstract class MouseHandlerMixin {
             }
 
             Screen screen = this.minecraft.gui.screen();
+            if (screen instanceof TitleScreen || screen instanceof PauseScreen) {
+                return;
+            }
+
             Font font = screen.getFont();
             if (font != null) {
                 int textWidth = Math.max(font.width("[VI]"), font.width("[EN]"));
