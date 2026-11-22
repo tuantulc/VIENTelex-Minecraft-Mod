@@ -6,7 +6,9 @@ import net.clot.vientelex.VietnameseIMEConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.TitleScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,6 +29,7 @@ public abstract class ScreenMixin {
         if (this.font == null) return;
         VietnameseIMEConfig.ensureLoaded();
         if (!VietnameseIMEConfig.showBadge || VietnameseIMEConfig.badgeOpacity <= 0.0f) return;
+        if ((Object) this instanceof TitleScreen || (Object) this instanceof PauseScreen) return;
 
         boolean enabled = VietnameseIME.isEnabled();
         String badge = enabled ? "[VI]" : "[EN]";
