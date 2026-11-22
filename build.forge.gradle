@@ -92,3 +92,12 @@ tasks.named('jar', Jar).configure {
     }
     finalizedBy 'reobfJar'
 }
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = Integer.parseInt(java_version)
+}
+
+java {
+    sourceCompatibility = JavaVersion.toVersion(java_version)
+    targetCompatibility = JavaVersion.toVersion(java_version)
+}
