@@ -351,7 +351,6 @@ public class TelexEngine {
 
             if (b1 == 'u' && b2 == 'a') {
                 if (i > 0 && Character.toLowerCase(word.charAt(i - 1)) == 'q') {
-                    // "qu" is a consonant cluster, 'a' can take breve (ă) as in "quăn", "quắt"
                     continue;
                 }
                 uIdx = i;
