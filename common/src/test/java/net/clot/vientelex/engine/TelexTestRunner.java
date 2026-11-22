@@ -59,6 +59,23 @@ public class TelexTestRunner {
         test("khuyến", "khuyeens", "khuyến");
         test("chào", "chaof", "chào");
 
+        test("giới (gioiws)", "gioiws", "giới");
+        test("giới (gioisw)", "gioisw", "giới");
+        test("giới (giowis)", "giowis", "giới");
+        test("trời (troiwf)", "troiwf", "trời");
+        test("chơi (choiw)", "choiw", "chơi");
+        test("nơi (noiw)", "noiw", "nơi");
+        test("tôi (toio)", "toio", "tôi");
+        test("tối (toios)", "toios", "tối");
+        test("cây (caya)", "caya", "cây");
+        test("câu (caua)", "caua", "câu");
+        test("kêu (keue)", "keue", "kêu");
+        test("gửi (guiwr)", "guiwr", "gửi");
+        test("mưa (muaw)", "muaw", "mưa");
+        test("chưa (chuaw)", "chuaw", "chưa");
+        test("Undo chơi (choiww)", "choiww", "choiw");
+        test("Undo mưa (muaww)", "muaww", "muaw");
+
         test("Free typing: cốc (cocos)", "cocos", "cốc");
         test("Free typing: nêm (neme)", "neme", "nêm");
         test("Free typing: đất (ddatas)", "ddatas", "đất");

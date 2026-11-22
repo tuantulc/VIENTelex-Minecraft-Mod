@@ -76,6 +76,20 @@ public class TelexEngineTest {
         assertEquals("mía", typeSequence("mias"));
         assertEquals("của", typeSequence("cuar"));
         assertEquals("mượn", typeSequence("muonwj"));
+        assertEquals("giới", typeSequence("gioiws"));
+        assertEquals("giới", typeSequence("gioisw"));
+        assertEquals("giới", typeSequence("giowis"));
+        assertEquals("trời", typeSequence("troiwf"));
+        assertEquals("chơi", typeSequence("choiw"));
+        assertEquals("nơi", typeSequence("noiw"));
+        assertEquals("tôi", typeSequence("toio"));
+        assertEquals("tối", typeSequence("toios"));
+        assertEquals("cây", typeSequence("caya"));
+        assertEquals("câu", typeSequence("caua"));
+        assertEquals("kêu", typeSequence("keue"));
+        assertEquals("gửi", typeSequence("guiwr"));
+        assertEquals("mưa", typeSequence("muaw"));
+        assertEquals("chưa", typeSequence("chuaw"));
     }
 
     @Test

@@ -155,7 +155,7 @@ public class TelexEngine {
 
         if (base == 'a' && mod == Modifier.HAT) {
             return switch (coda) {
-                case "c", "t", "p", "m", "n", "ng" -> true;
+                case "c", "t", "p", "m", "n", "ng", "y", "u" -> true;
                 default -> false;
             };
         }
@@ -169,14 +169,28 @@ public class TelexEngine {
 
         if (base == 'e' && mod == Modifier.HAT) {
             return switch (coda) {
-                case "ch", "nh", "t", "p", "m", "n" -> true;
+                case "ch", "nh", "t", "p", "m", "n", "ng", "u" -> true;
                 default -> false;
             };
         }
 
         if (base == 'o' && mod == Modifier.HAT) {
             return switch (coda) {
-                case "c", "t", "p", "m", "n", "ng" -> true;
+                case "c", "t", "p", "m", "n", "ng", "i" -> true;
+                default -> false;
+            };
+        }
+
+        if (base == 'o' && mod == Modifier.HORN) {
+            return switch (coda) {
+                case "i", "m", "n", "p", "t" -> true;
+                default -> false;
+            };
+        }
+
+        if (base == 'u' && mod == Modifier.HORN) {
+            return switch (coda) {
+                case "i", "u", "a", "c", "t", "ng" -> true;
                 default -> false;
             };
         }
@@ -198,6 +212,9 @@ public class TelexEngine {
         if (lowerKey == 'w') {
             TelexResult uoResult = processHornUO(word, keyChar);
             if (uoResult.isHandled()) return uoResult;
+
+            TelexResult uaResult = processHornUA(word, keyChar);
+            if (uaResult.isHandled()) return uaResult;
         }
 
         int candidateIdx = -1;
@@ -320,10 +337,60 @@ public class TelexEngine {
         return new TelexResult(false, word);
     }
 
+    private static TelexResult processHornUA(String word, char keyChar) {
+        int uIdx = -1;
+        int aIdx = -1;
+
+        for (int i = 0; i < word.length() - 1; i++) {
+            char c1 = word.charAt(i);
+            char c2 = word.charAt(i + 1);
+            CharData d1 = VietnameseChar.decompose(c1);
+            CharData d2 = VietnameseChar.decompose(c2);
+            char b1 = (d1 != null) ? d1.base : Character.toLowerCase(c1);
+            char b2 = (d2 != null) ? d2.base : Character.toLowerCase(c2);
+
+            if (b1 == 'u' && b2 == 'a') {
+                if (i > 0 && Character.toLowerCase(word.charAt(i - 1)) == 'q') {
+                    // "qu" is a consonant cluster, 'a' can take breve (ă) as in "quăn", "quắt"
+                    continue;
+                }
+                uIdx = i;
+                aIdx = i + 1;
+                break;
+            }
+        }
+
+        if (uIdx >= 0) {
+            // "ua" -> "ưa" only when there's no coda after 'a'
+            if (aIdx == word.length() - 1) {
+                char cu = word.charAt(uIdx);
+                CharData du = VietnameseChar.decompose(cu);
+                Modifier mu = (du != null) ? du.modifier : Modifier.NONE;
+                Tone tu = (du != null) ? du.tone : Tone.NONE;
+
+                if (mu == Modifier.HORN) {
+                    Character rawU = VietnameseChar.compose('u', Modifier.NONE, tu, Character.isUpperCase(cu));
+                    StringBuilder sb = new StringBuilder(word);
+                    sb.setCharAt(uIdx, rawU != null ? rawU : 'u');
+                    sb.append(keyChar);
+                    return new TelexResult(true, sb.toString());
+                } else {
+                    Character newU = VietnameseChar.compose('u', Modifier.HORN, tu, Character.isUpperCase(cu));
+                    if (newU != null) {
+                        StringBuilder sb = new StringBuilder(word);
+                        sb.setCharAt(uIdx, newU);
+                        return new TelexResult(true, sb.toString());
+                    }
+                }
+            }
+        }
+        return new TelexResult(false, word);
+    }
+
     private static boolean isValidCoda(String coda) {
         if (coda.isEmpty()) return true;
         return switch (coda) {
-            case "c", "ch", "m", "n", "nh", "ng", "p", "t" -> true;
+            case "c", "ch", "m", "n", "nh", "ng", "p", "t", "i", "y", "u", "o", "a" -> true;
             default -> false;
         };
     }

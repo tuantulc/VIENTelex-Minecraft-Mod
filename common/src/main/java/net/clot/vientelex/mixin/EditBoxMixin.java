@@ -15,7 +15,9 @@ public abstract class EditBoxMixin {
     @Shadow public abstract int getCursorPosition();
     @Shadow public abstract void setValue(String text);
     @Shadow public abstract void setCursorPosition(int pos);
+    @Shadow public abstract void setHighlightPos(int pos);
     @Shadow public abstract boolean canConsumeInput();
+    @Shadow private int highlightPos;
 
     @Inject(method = "charTyped", at = @At("HEAD"), cancellable = true)
     private void onCharTyped(char codePoint, int modifiers, CallbackInfoReturnable<Boolean> cir) {
@@ -23,10 +25,16 @@ public abstract class EditBoxMixin {
             return;
         }
 
+        // If user has an active text selection, let vanilla handle it (replaces selection)
+        if (this.getCursorPosition() != this.highlightPos) {
+            return;
+        }
+
         VietnameseIME.ProcessResult result = VietnameseIME.processInput(this.getValue(), this.getCursorPosition(), codePoint);
         if (result != null) {
             this.setValue(result.newText);
             this.setCursorPosition(result.newCursor);
+            this.setHighlightPos(result.newCursor);
             cir.setReturnValue(true);
         }
     }
