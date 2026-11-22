@@ -8,9 +8,15 @@ base {
     archivesName = "${mod_id}-common"
 }
 
+repositories {
+    mavenCentral()
+}
+
 compileJava.enabled = false
 processResources.enabled = false
 jar.enabled = false
+compileTestJava.enabled = false
+test.enabled = false
 
 dependencies {
     compileOnly 'org.spongepowered:mixin:0.8.5'
