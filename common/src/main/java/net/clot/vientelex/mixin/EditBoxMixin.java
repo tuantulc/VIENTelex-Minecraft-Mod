@@ -16,11 +16,18 @@ public abstract class EditBoxMixin {
     @Shadow public abstract int getCursorPosition();
     @Shadow public abstract void setValue(String text);
     @Shadow public abstract void setCursorPosition(int pos);
+    @Shadow public abstract void setHighlightPos(int pos);
     @Shadow public abstract boolean canConsumeInput();
+    @Shadow private int highlightPos;
 
     @Inject(method = "charTyped", at = @At("HEAD"), cancellable = true)
     private void onCharTyped(CharacterEvent event, CallbackInfoReturnable<Boolean> cir) {
         if (!this.canConsumeInput()) {
+            return;
+        }
+
+        // If user has an active text selection, let vanilla handle it (replaces selection)
+        if (this.getCursorPosition() != this.highlightPos) {
             return;
         }
 
@@ -29,6 +36,7 @@ public abstract class EditBoxMixin {
         if (result != null) {
             this.setValue(result.newText);
             this.setCursorPosition(result.newCursor);
+            this.setHighlightPos(result.newCursor);
             cir.setReturnValue(true);
         }
     }
