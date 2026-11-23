@@ -1,6 +1,7 @@
 package net.clot.vientelex.mixin;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen;
 import net.clot.vientelex.VietnameseIMEClient;
 import net.clot.vientelex.VietnameseIMEConfig;
 import net.minecraft.client.Minecraft;
@@ -33,7 +34,7 @@ public abstract class MouseHandlerMixin {
             }
 
             Screen screen = this.minecraft.gui.screen();
-            if (screen instanceof TitleScreen || screen instanceof PauseScreen) {
+            if (screen instanceof TitleScreen || screen instanceof PauseScreen || screen instanceof RealmsNotificationsScreen) {
                 return;
             }
 
