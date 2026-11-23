@@ -1,5 +1,6 @@
 package net.clot.vientelex.mixin;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import net.clot.vientelex.VietnameseIMEClient;
 import net.clot.vientelex.VietnameseIMEConfig;
 import net.minecraft.client.Minecraft;
@@ -25,7 +26,7 @@ public abstract class MouseHandlerMixin {
 
     @Inject(method = "onButton", at = @At("HEAD"), cancellable = true)
     private void onMouseButton(long window, MouseButtonInfo info, int action, CallbackInfo ci) {
-        if (info.button() == 0 && action == 1 && this.minecraft != null && this.minecraft.gui != null && this.minecraft.gui.screen() != null) {
+        if ((info.button() == InputConstants.MOUSE_BUTTON_LEFT || info.button() == 0) && action == 1 && this.minecraft != null && this.minecraft.gui != null && this.minecraft.gui.screen() != null) {
             VietnameseIMEConfig.ensureLoaded();
             if (!VietnameseIMEConfig.showBadge || VietnameseIMEConfig.badgeOpacity <= 0.0f) {
                 return;
