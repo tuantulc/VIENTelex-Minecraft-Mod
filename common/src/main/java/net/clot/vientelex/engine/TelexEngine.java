@@ -9,6 +9,12 @@ import java.util.List;
 
 public class TelexEngine {
 
+    private static boolean uWasTransformedToHorn = false;
+
+    public static void reset() {
+        uWasTransformedToHorn = false;
+    }
+
     public static TelexResult process(String currentWord, char keyChar) {
         if (currentWord == null) currentWord = "";
         char lowerKey = Character.toLowerCase(keyChar);
@@ -16,11 +22,21 @@ public class TelexEngine {
         if (currentWord.equals("ư") || currentWord.equals("Ư")) {
             char wChar = currentWord.equals("Ư") || Character.isUpperCase(keyChar) ? 'W' : 'w';
             if (lowerKey == 'w') {
+                if (uWasTransformedToHorn) {
+                    uWasTransformedToHorn = false;
+                    char uChar = currentWord.equals("Ư") ? 'U' : 'u';
+                    return new TelexResult(true, String.valueOf(uChar) + keyChar);
+                }
                 return new TelexResult(true, String.valueOf(wChar));
             }
             if (lowerKey == 'a' || lowerKey == 'e' || lowerKey == 'i' || lowerKey == 'o' || lowerKey == 'h' || lowerKey == 'r' || lowerKey == 'y') {
+                uWasTransformedToHorn = false;
                 return new TelexResult(true, String.valueOf(wChar) + keyChar);
             }
+        }
+
+        if (lowerKey != 'w') {
+            uWasTransformedToHorn = false;
         }
 
         if (lowerKey == 'd') {
@@ -270,6 +286,9 @@ public class TelexEngine {
                 if (currentMod == Modifier.NONE) {
                     Character newChar = VietnameseChar.compose(base, targetMod, currentTone, isUpper);
                     if (newChar != null) {
+                        if (lowerKey == 'w' && base == 'u' && word.length() == 1) {
+                            uWasTransformedToHorn = true;
+                        }
                         return new TelexResult(true, replaceCharAt(word, candidateIdx, newChar));
                     }
                 } else if (currentMod == targetMod) {
