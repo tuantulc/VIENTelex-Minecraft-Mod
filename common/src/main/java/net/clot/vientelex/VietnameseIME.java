@@ -51,6 +51,11 @@ public class VietnameseIME {
     public static ProcessResult processInput(String fullText, int cursor, char typedChar) {
         if (!enabled) return null;
 
+        if (Character.isWhitespace(typedChar) || isWordDelimiter(typedChar)) {
+            TelexEngine.reset();
+            return null;
+        }
+
         int safeCursor = Math.max(0, Math.min(cursor, fullText.length()));
         int wordStart = findWordStart(fullText, safeCursor);
         String currentWord = fullText.substring(wordStart, safeCursor);

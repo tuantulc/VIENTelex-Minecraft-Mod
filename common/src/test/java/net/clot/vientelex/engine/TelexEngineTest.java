@@ -6,12 +6,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TelexEngineTest {
 
     private String typeSequence(String input) {
+        TelexEngine.reset();
         StringBuilder fullText = new StringBuilder();
         int wordStart = 0;
 
         for (int i = 0; i < input.length(); i++) {
             char c = input.charAt(i);
             if (Character.isWhitespace(c) || ",.!?;:/-()[]{}".indexOf(c) >= 0) {
+                TelexEngine.reset();
                 fullText.append(c);
                 wordStart = fullText.length();
             } else {
@@ -58,7 +60,8 @@ public class TelexEngineTest {
         assertEquals("w", typeSequence("ww"));
         assertEquals("ww", typeSequence("www"));
         assertEquals("www", typeSequence("wwww"));
-        assertEquals("w", typeSequence("uww"));
+        assertEquals("uw", typeSequence("uww"));
+        assertEquals("uwu", typeSequence("uwwu"));
         assertEquals("sw", typeSequence("sww"));
         assertEquals("what", typeSequence("what"));
         assertEquals("write", typeSequence("write"));

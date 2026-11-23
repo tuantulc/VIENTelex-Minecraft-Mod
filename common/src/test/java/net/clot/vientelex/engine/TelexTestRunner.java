@@ -31,7 +31,8 @@ public class TelexTestRunner {
         test("Undo w -> ww -> w", "ww", "w");
         test("Undo w -> www -> ww", "www", "ww");
         test("Undo w -> wwww -> www", "wwww", "www");
-        test("Undo ư (uw) -> uww -> w", "uww", "w");
+        test("Undo ư (uw) -> uww -> uw", "uww", "uw");
+        test("Meme uwu", "uwwu", "uwu");
         test("Undo sw -> sww -> sw", "sww", "sw");
         test("English what", "what", "what");
         test("English write", "write", "write");
@@ -120,12 +121,14 @@ public class TelexTestRunner {
     }
 
     private static String typeSequence(String input) {
+        TelexEngine.reset();
         StringBuilder fullText = new StringBuilder();
         int wordStart = 0;
 
         for (int i = 0; i < input.length(); i++) {
             char c = input.charAt(i);
             if (Character.isWhitespace(c) || ",.!?;:/-()[]{}".indexOf(c) >= 0) {
+                TelexEngine.reset();
                 fullText.append(c);
                 wordStart = fullText.length();
             } else {
