@@ -28,6 +28,13 @@ public class TelexTestRunner {
         test("Undo ô -> oo", "ooo", "oo");
         test("Undo đ -> dd", "ddd", "dd");
         test("Undo ă -> aw", "aww", "aw");
+        test("Undo w -> ww -> w", "ww", "w");
+        test("Undo w -> www -> ww", "www", "ww");
+        test("Undo w -> wwww -> www", "wwww", "www");
+        test("Undo ư (uw) -> uww -> w", "uww", "w");
+        test("Undo sw -> sww -> sw", "sww", "sw");
+        test("English what", "what", "what");
+        test("English write", "write", "write");
         test("Undo tone má -> mas", "mass", "mas");
         test("Undo tone toan -> toans", "toanss", "toans");
         test("Direct English word class", "class", "class");

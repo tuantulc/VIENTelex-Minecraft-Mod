@@ -55,6 +55,13 @@ public class TelexEngineTest {
         assertEquals("oo", typeSequence("ooo"));
         assertEquals("dd", typeSequence("ddd"));
         assertEquals("aw", typeSequence("aww"));
+        assertEquals("w", typeSequence("ww"));
+        assertEquals("ww", typeSequence("www"));
+        assertEquals("www", typeSequence("wwww"));
+        assertEquals("w", typeSequence("uww"));
+        assertEquals("sw", typeSequence("sww"));
+        assertEquals("what", typeSequence("what"));
+        assertEquals("write", typeSequence("write"));
 
         assertEquals("toans", typeSequence("toanss"));
         assertEquals("mas", typeSequence("mass"));

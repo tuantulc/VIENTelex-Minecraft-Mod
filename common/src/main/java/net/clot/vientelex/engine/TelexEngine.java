@@ -13,9 +13,14 @@ public class TelexEngine {
         if (currentWord == null) currentWord = "";
         char lowerKey = Character.toLowerCase(keyChar);
 
-        if ((currentWord.equals("ư") || currentWord.equals("Ư")) && (lowerKey == 'a' || lowerKey == 'e' || lowerKey == 'i' || lowerKey == 'o')) {
-            char wChar = currentWord.equals("Ư") ? 'W' : 'w';
-            return new TelexResult(true, String.valueOf(wChar) + keyChar);
+        if (currentWord.equals("ư") || currentWord.equals("Ư")) {
+            char wChar = currentWord.equals("Ư") || Character.isUpperCase(keyChar) ? 'W' : 'w';
+            if (lowerKey == 'w') {
+                return new TelexResult(true, String.valueOf(wChar));
+            }
+            if (lowerKey == 'a' || lowerKey == 'e' || lowerKey == 'i' || lowerKey == 'o' || lowerKey == 'h' || lowerKey == 'r' || lowerKey == 'y') {
+                return new TelexResult(true, String.valueOf(wChar) + keyChar);
+            }
         }
 
         if (lowerKey == 'd') {
@@ -268,6 +273,10 @@ public class TelexEngine {
                         return new TelexResult(true, replaceCharAt(word, candidateIdx, newChar));
                     }
                 } else if (currentMod == targetMod) {
+                    if (lowerKey == 'w' && base == 'u' && candidateIdx > 0 && !VietnameseChar.isVowel(word.charAt(candidateIdx - 1))) {
+                        String restored = word.substring(0, candidateIdx);
+                        return new TelexResult(true, restored + keyChar);
+                    }
                     Character baseChar = VietnameseChar.compose(base, Modifier.NONE, currentTone, isUpper);
                     if (baseChar != null) {
                         String restored = replaceCharAt(word, candidateIdx, baseChar);
@@ -278,6 +287,10 @@ public class TelexEngine {
         }
 
         if (lowerKey == 'w') {
+            char lastChar = word.charAt(word.length() - 1);
+            if (lastChar == 'w' || lastChar == 'W') {
+                return new TelexResult(true, word + keyChar);
+            }
             char composed = Character.isUpperCase(keyChar) ? 'Ư' : 'ư';
             return new TelexResult(true, word + composed);
         }
