@@ -356,8 +356,9 @@ public class TelexEngine {
                 sb.append(keyChar);
                 return new TelexResult(true, sb.toString());
             } else {
-                Character newU = VietnameseChar.compose('u', Modifier.HORN, tu, Character.isUpperCase(cu));
-                Character newO = VietnameseChar.compose('o', Modifier.HORN, to, Character.isUpperCase(co));
+                Tone targetTone = (tu != Tone.NONE) ? tu : to;
+                Character newU = VietnameseChar.compose('u', Modifier.HORN, Tone.NONE, Character.isUpperCase(cu));
+                Character newO = VietnameseChar.compose('o', Modifier.HORN, targetTone, Character.isUpperCase(co));
                 if (newU != null && newO != null) {
                     StringBuilder sb = new StringBuilder(word);
                     sb.setCharAt(uIdx, newU);
@@ -553,15 +554,24 @@ public class TelexEngine {
             }
         }
 
+        if (actualVowels.size() >= 3) {
+            return actualVowels.get(1);
+        }
+
+        char c1 = word.charAt(actualVowels.get(0));
+        char c2 = word.charAt(actualVowels.get(1));
+        CharData d1 = VietnameseChar.decompose(c1);
+        CharData d2 = VietnameseChar.decompose(c2);
+        char b1 = (d1 != null) ? d1.base : Character.toLowerCase(c1);
+        char b2 = (d2 != null) ? d2.base : Character.toLowerCase(c2);
+
         int lastVowelIdx = actualVowels.get(actualVowels.size() - 1);
         boolean hasCoda = (lastVowelIdx < word.length() - 1);
 
         if (hasCoda) {
             return actualVowels.get(1);
         } else {
-            char v1 = Character.toLowerCase(word.charAt(actualVowels.get(0)));
-            char v2 = Character.toLowerCase(word.charAt(actualVowels.get(1)));
-            if ((v1 == 'o' && (v2 == 'a' || v2 == 'e')) || (v1 == 'u' && v2 == 'y')) {
+            if ((b1 == 'o' && (b2 == 'a' || b2 == 'e')) || (b1 == 'u' && b2 == 'y')) {
                 return actualVowels.get(1);
             }
             return actualVowels.get(0);

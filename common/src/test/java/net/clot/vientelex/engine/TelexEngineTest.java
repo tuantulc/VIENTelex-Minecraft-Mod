@@ -100,6 +100,12 @@ public class TelexEngineTest {
         assertEquals("gửi", typeSequence("guiwr"));
         assertEquals("mưa", typeSequence("muaw"));
         assertEquals("chưa", typeSequence("chuaw"));
+        assertEquals("hoài", typeSequence("hoaif"));
+        assertEquals("hoái", typeSequence("hoaifs"));
+        assertEquals("muối", typeSequence("muoois"));
+        assertEquals("muói", typeSequence("muois"));
+        assertEquals("người", typeSequence("nguoifw"));
+        assertEquals("tiền", typeSequence("tieenf"));
     }
 
     @Test

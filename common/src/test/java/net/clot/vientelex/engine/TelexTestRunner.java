@@ -66,6 +66,13 @@ public class TelexTestRunner {
         test("khuyên", "khuyeen", "khuyên");
         test("khuyến", "khuyeens", "khuyến");
         test("chào", "chaof", "chào");
+        test("hoài", "hoaif", "hoài");
+        test("hoái", "hoaifs", "hoái");
+        test("muối (muoois)", "muoois", "muối");
+        test("muói (muois)", "muois", "muói");
+        test("người (nguowif)", "nguowif", "người");
+        test("người (nguoifw)", "nguoifw", "người");
+        test("tiền (tieenf)", "tieenf", "tiền");
 
         test("giới (gioiws)", "gioiws", "giới");
         test("giới (gioisw)", "gioisw", "giới");
