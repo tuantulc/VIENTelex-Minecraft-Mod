@@ -1,5 +1,6 @@
 package net.clot.vientelex.mixin;
 
+import com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen;
 import net.clot.vientelex.VietnameseIME;
 import net.clot.vientelex.VietnameseIMEClient;
 import net.clot.vientelex.VietnameseIMEConfig;
@@ -29,7 +30,8 @@ public abstract class ScreenMixin {
         if (this.font == null) return;
         VietnameseIMEConfig.ensureLoaded();
         if (!VietnameseIMEConfig.showBadge || VietnameseIMEConfig.badgeOpacity <= 0.0f) return;
-        if ((Object) this instanceof TitleScreen || (Object) this instanceof PauseScreen) return;
+        if ((Object) this instanceof TitleScreen || (Object) this instanceof PauseScreen || (Object) this instanceof RealmsNotificationsScreen) return;
+        if (this.minecraft != null && (this.minecraft.screen instanceof TitleScreen || this.minecraft.screen instanceof PauseScreen)) return;
 
         boolean enabled = VietnameseIME.isEnabled();
         String badge = enabled ? "[VI]" : "[EN]";
