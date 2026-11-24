@@ -52,6 +52,12 @@ tasks.named('processResources', ProcessResources).configure {
     }
 }
 
+configurations.named('compileClasspath') {
+    attributes {
+        attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 25)
+    }
+}
+
 tasks.withType(JavaCompile).configureEach {
     it.options.release = Integer.parseInt(java_version)
 }
@@ -65,6 +71,6 @@ tasks.named('jar', Jar).configure {
 }
 
 java {
-    sourceCompatibility = JavaVersion.toVersion(java_version)
-    targetCompatibility = JavaVersion.toVersion(java_version)
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
