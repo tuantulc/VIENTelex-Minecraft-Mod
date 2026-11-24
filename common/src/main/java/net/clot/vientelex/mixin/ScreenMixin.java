@@ -6,7 +6,7 @@ import net.clot.vientelex.VietnameseIMEClient;
 import net.clot.vientelex.VietnameseIMEConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
@@ -26,14 +26,14 @@ public abstract class ScreenMixin {
     @Shadow public int width;
     @Shadow public int height;
 
-    @Inject(method = "extractRenderState", at = @At("TAIL"))
-    private void onExtractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
+    @Inject(method = "render", at = @At("TAIL"))
+    private void onRender(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
         if (this.font == null) return;
         VietnameseIMEConfig.ensureLoaded();
         if (!VietnameseIMEConfig.showBadge || VietnameseIMEConfig.badgeOpacity <= 0.0f) return;
         if ((Object) this instanceof TitleScreen || (Object) this instanceof PauseScreen || (Object) this instanceof RealmsNotificationsScreen) return;
-        if (this.minecraft != null && this.minecraft.gui != null) {
-            Screen current = this.minecraft.gui.screen();
+        if (this.minecraft != null) {
+            Screen current = this.minecraft.screen;
             if (current instanceof TitleScreen || current instanceof PauseScreen) return;
         }
 
@@ -53,7 +53,7 @@ public abstract class ScreenMixin {
         int bgColor = (bgAlpha << 24) | (hovered ? 0x333333 : 0x000000);
 
         guiGraphics.fill(x - 2, y - 2, x + textWidth + 2, y + this.font.lineHeight, bgColor);
-        guiGraphics.text(this.font, badge, x, y, textColor, false);
+        guiGraphics.drawString(this.font, badge, x, y, textColor, false);
     }
 
     @Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)

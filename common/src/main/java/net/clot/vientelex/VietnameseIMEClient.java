@@ -18,8 +18,9 @@ public class VietnameseIMEClient {
         boolean enabled = VietnameseIME.toggle();
         if (mc != null) {
             if (mc.player != null) {
-                mc.player.sendOverlayMessage(
-                        Component.translatable(enabled ? "message.vientelex.enabled" : "message.vientelex.disabled")
+                mc.player.displayClientMessage(
+                        Component.translatable(enabled ? "message.vientelex.enabled" : "message.vientelex.disabled"),
+                        true
                 );
             }
             if (playSound && mc.getSoundManager() != null) {

@@ -27,18 +27,18 @@ public abstract class MouseHandlerMixin {
 
     @Inject(method = "onButton", at = @At("HEAD"), cancellable = true)
     private void onMouseButton(long window, MouseButtonInfo info, int action, CallbackInfo ci) {
-        if ((info.button() == InputConstants.MOUSE_BUTTON_LEFT || info.button() == 0) && action == 1 && this.minecraft != null && this.minecraft.gui != null && this.minecraft.gui.screen() != null) {
+        if ((info.button() == InputConstants.MOUSE_BUTTON_LEFT || info.button() == 0) && action == 1 && this.minecraft != null && this.minecraft.screen != null) {
             VietnameseIMEConfig.ensureLoaded();
             if (!VietnameseIMEConfig.showBadge || VietnameseIMEConfig.badgeOpacity <= 0.0f) {
                 return;
             }
 
-            Screen screen = this.minecraft.gui.screen();
+            Screen screen = this.minecraft.screen;
             if (screen instanceof TitleScreen || screen instanceof PauseScreen || screen instanceof RealmsNotificationsScreen) {
                 return;
             }
 
-            Font font = screen.getFont();
+            Font font = this.minecraft.font;
             if (font != null) {
                 int textWidth = Math.max(font.width("[VI]"), font.width("[EN]"));
                 int x = screen.width - textWidth - 6;
