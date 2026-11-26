@@ -35,7 +35,7 @@ public class VietnameseIME {
     }
 
     public static boolean isWordDelimiter(char c) {
-        return ",.!?;:/-+*=<>()[]{}\"'\n\r\t".indexOf(c) >= 0;
+        return ",.!?;:/-+*=<>()[]{}\"'\n\r\t§&".indexOf(c) >= 0;
     }
 
     public static class ProcessResult {
