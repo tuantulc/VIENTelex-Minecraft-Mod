@@ -7,9 +7,13 @@ import net.clot.vientelex.VietnameseIMEConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.events.ContainerEventHandler;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.client.input.CharacterEvent;
 import net.minecraft.client.input.KeyEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -61,6 +65,32 @@ public abstract class ScreenMixin {
         if (VietnameseIMEClient.TOGGLE_KEY.matches(event)) {
             VietnameseIMEClient.toggleAndNotify(this.minecraft, false);
             cir.setReturnValue(true);
+        }
+    }
+
+    @Inject(method = "charTyped", at = @At("HEAD"), cancellable = true)
+    private void onCharTyped(CharacterEvent event, CallbackInfoReturnable<Boolean> cir) {
+        GuiEventListener focused = ((Screen) (Object) this).getFocused();
+        while (focused instanceof ContainerEventHandler container && container.getFocused() != null) {
+            focused = container.getFocused();
+        }
+
+        if (focused instanceof EditBox editBox) {
+            if (!editBox.canConsumeInput()) {
+                return;
+            }
+            if (editBox.getCursorPosition() != ((EditBoxAccessor) editBox).getHighlightPos()) {
+                return;
+            }
+
+            char codePoint = (char) event.codepoint();
+            VietnameseIME.ProcessResult result = VietnameseIME.processInput(editBox.getValue(), editBox.getCursorPosition(), codePoint);
+            if (result != null) {
+                editBox.setValue(result.newText);
+                editBox.setCursorPosition(result.newCursor);
+                editBox.setHighlightPos(result.newCursor);
+                cir.setReturnValue(true);
+            }
         }
     }
 }
