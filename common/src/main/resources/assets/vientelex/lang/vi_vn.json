@@ -2,5 +2,8 @@
   "key.categories.vientelex": "VI-EN Vietnamese Telex",
   "key.vientelex.toggle": "Bật/Tắt gõ tiếng Việt Telex",
   "message.vientelex.enabled": "§a[VI] §fGõ tiếng Việt",
-  "message.vientelex.disabled": "§7[EN] §fGõ tiếng Anh"
+  "message.vientelex.disabled": "§7[EN] §fGõ tiếng Anh",
+  "title.vientelex.config": "Cài đặt VI-EN Telex",
+  "option.vientelex.showBadge": "Hiển thị huy hiệu",
+  "option.vientelex.badgeOpacity": "Độ mờ huy hiệu: %s%%"
 }

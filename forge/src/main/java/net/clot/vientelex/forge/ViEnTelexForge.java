@@ -1,10 +1,10 @@
 package net.clot.vientelex.forge;
 
-import net.minecraftforge.api.distmarker.Dist;
+import net.clot.vientelex.client.gui.VietnameseIMEConfigScreen;
+import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 
 @Mod(ViEnTelexForge.MOD_ID)
 public class ViEnTelexForge {
@@ -16,6 +16,12 @@ public class ViEnTelexForge {
                 () -> new IExtensionPoint.DisplayTest(
                         () -> IExtensionPoint.DisplayTest.IGNORESERVERONLY,
                         (remoteVersion, isServer) -> true
+                )
+        );
+        ModLoadingContext.get().registerExtensionPoint(
+                ConfigScreenHandler.ConfigScreenFactory.class,
+                () -> new ConfigScreenHandler.ConfigScreenFactory(
+                        (mc, parent) -> new VietnameseIMEConfigScreen(parent)
                 )
         );
     }
