@@ -17,6 +17,12 @@ loom {
     }
 }
 
+repositories {
+    maven {
+        url = "https://maven.terraformersmc.com/releases/"
+    }
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.officialMojangMappings()
@@ -24,6 +30,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-key-binding-api-v1:1.1.7+4fc5413f3e"
     modImplementation "net.fabricmc.fabric-api:fabric-lifecycle-events-v1:2.6.15+4ebb5c083e"
+    modCompileOnly "com.terraformersmc:modmenu:11.0.3"
 }
 
 sourceSets.main.java.srcDirs = [
