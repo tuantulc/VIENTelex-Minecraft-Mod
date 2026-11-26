@@ -10,11 +10,18 @@ base {
     archivesName = "${mod_id}-fabric-${output_version_name}"
 }
 
+repositories {
+    maven {
+        url = "https://maven.terraformersmc.com/releases/"
+    }
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
 
     implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     implementation fileTree(dir: 'fabric-api-jars', include: ['*.jar'])
+    compileOnly "com.terraformersmc:modmenu:21.0.0"
 }
 
 sourceSets.main.java.srcDirs = [
